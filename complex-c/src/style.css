@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+.container{
+    font-family:  'Poppins', sans-serif;
+    display: grid;
+    grid-template-columns:70% 30%;
+    background-color: #e5e5e5;
+   
+}
+.header{
+    height: 50px;
+    border-bottom: 5px solid #1da1f2;
+    background-color: #e5e5e5;
+}
+.header > p{
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    color: #424141;
+    padding-top:12px;
+    padding-left: 5px;
+}
+.list{
+    width: 95%;
+    height: 98%;
+    background-color: #ffff;
+    margin: 0 auto;
+}
+.list-div{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    border-bottom: 2px solid #e5e5e5 ;
+}
+.list-div-img > img {
+   width: 100%;
+   height: 100%;
+}
+.list-div  div {
+      height: 85%;
+      margin: auto 15px;
+}
+p.title{
+    color: #1da1f2;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+}
+.list-div > .list-div-item > button {
+    font-family:  'Poppins', sans-serif;
+    width: 100px;
+    height: 40px;
+    border: none;
+    background: none;
+    outline: none;
+    background-color: #e5e5e5;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #979797;
+    cursor: pointer;
+}
+.list-div-item > p{
+    line-height: 1.1;
+    font-size: 15px;  
+}
+.list-div-item > .information{
+    color: #b4b4b4;
+}
+/* style sidebar */
+.list.one{
+    margin-right: 20px;
+    height: 32%;
+}
+.list-div.one{
+    display: grid;
+    grid-template-columns:20% 80%;
+    border-bottom: 2px solid #e5e5e5 ;
+}
+.list-div-img > img#icon{
+    width: 100%;
+    height: 50%;
+}
+p.title.one{
+    text-transform: capitalize;
+    color: #424141;
+}
+.header.one{
+    border-bottom: none;
+    background-color: #424141;
+}
+.header.one > p {
+    padding-top: 15px;
+    padding-left:15px ;
+    color: white;
+}
+/* style register component */
+.div-sidebar{
+    background-color: #ffab91;
+    width: 95%;
+    margin-bottom: 35px;
+}
+.div-sidebar > .item{
+    position: relative;
+    width: 85%;
+    height: 55px;
+    margin: 40px auto;
+    text-align: center;
+}
+.item > p{
+    color: #e5e5e5;
+}
+.head{
+    text-transform: uppercase;
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+    margin-top: 5px;
+    padding-top: 20px;
+    text-align: center;
+}
+.item > input.input{
+    border: none;
+    outline: none;
+    background-color: #424141;
+    opacity: 0.2;
+    width: 50%;
+    height: 30px;
+    margin: 5px 0;
+}
+.item > label {
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    top: 20%;
+    left: 35%;
+}
+.item > label#label{
+    position: absolute;
+   top: 100%;
+}
+.item > input.input.one{
+    border: none;
+    outline: none;
+    background-color: white;
+    width: 50%;
+    height: 30px;
+}
+label#register{
+    position: absolute;
+    top: 95%;
+    left: 36%;
+    
+}
+input.position{
+    position: absolute;
+    top: 8%;
+    left: -5%;
+}
+
+
+
+
