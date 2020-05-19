@@ -1,0 +1,22 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+div.container{
+    width: 900px;
+    margin: 40px auto;
+}
+/* style item */
+div.container div.item.col{
+  border: 1px solid #999999;
+  border-radius: 2px;
+}
+div.container div.item.row{
+    border-top: 1px solid #999999;
+}
+img{
+    width: 100px;
+    height: 100px;
+}
+
