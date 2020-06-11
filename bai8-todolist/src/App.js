@@ -1,91 +1,74 @@
 import React from "react";
+import { useState } from "react";
 import FormTodo from "./component/form_todo";
 import List from "./component/list";
-import "../src/style.css";
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      todoLists: [
-        { id: 1, name: "Khoa" },
-        { id: 2, name: "Linh" },
-        { id: 3, name: "Long" },
-      ],
-      inputValue: "",
-      currentName: "",
-      todoSearch: ''
-    };
-  }
-  handleAdd = (inputText) => {
-    const { todoLists, currentName } = this.state;
-    if (currentName.trim() !== "") {
-      this.setState({
-        todoLists: todoLists.map((todo) => {
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+export default function App() {
+  const [todoLists, setTodo] = useState([
+    { id: 1, name: "Khoa" },
+    { id: 2, name: "Linh" },
+    { id: 3, name: "Long" },
+  ]);
+  const [currentName, getName] = useState("");
+  const [valueInput, setValue] = useState("");
+  const [newTodo, search] = useState("");
+  const addTodo = (inputText) => {
+    if (currentName !== "") {
+      setTodo(
+        todoLists.map((todo) => {
           if (todo.name === currentName) {
-            return { ...todo, name: inputText.current.value };
+            return { ...todo, name: valueInput };
           } else return { ...todo };
-        }),
-        currentName: "",
-      });
+        })
+      );
+      getName("");
     } else {
-      const newTodo = {
-        id: todoLists.length + 1,
-        name: inputText.current.value,
-      };
-      this.setState({
-        todoLists: [...todoLists, newTodo],
-        currentName: "",
-      });
+      setTodo([
+        ...todoLists,
+        { id: todoLists.length + 1, name: inputText.current.value },
+      ]);
     }
   };
-  handleDelete = (id) => {
-    const { todoLists } = this.state;
-    this.setState({
-      todoLists: todoLists.filter((todo) => todo.id !== id),
+  const deleteTodo = (id) => {
+    setTodo((newTodo) => {
+      return [...newTodo.filter((todo) => todo.id !== id)];
     });
   };
-  handleEdit = (inputText) => {
-    this.setState({
-      inputValue: inputText,
-      currentName: inputText,
+  const editTodo = (id) => {
+    let name = "";
+    todoLists.map((todo) => {
+      if (todo.id === id) name = todo.name;
     });
+    getName(name);
+    setValue(name);
   };
-  handleChange = (e) => {
-    this.setState({
-      inputValue: e.target.value,
-    });
+  const handleChange = (e) => {
+    setValue(e.target.value);
   };
-  handleSearch = (inputText) => {
-    const { todoLists } = this.state;
-    this.setState(
-      {
-        todoSearch: todoLists.filter(todo =>
-          todo.name
-            .toLowerCase()
-            .includes(inputText.current.value.toLowerCase())
-        ),
-      }
-    );
+  const searchTodo = (nameSearch) => {
+    search([
+      ...todoLists.filter((todo) =>
+        todo.name.toLowerCase().includes(nameSearch.toLowerCase())
+      ),
+    ]);
   };
-  render() {
-    const { todoLists, inputValue ,todoSearch} = this.state;
-    return (
-      <div className="App">
-        <FormTodo
-          handleAdd={this.handleAdd}
-          inputValue={inputValue}
-          handleChange={this.handleChange}
-          handleSearch={this.handleSearch}
-        />
-        <List
-          todoLists={todoLists}
-          todoSearch={todoSearch}
-          handleDelete={this.handleDelete}
-          handleEdit={this.handleEdit}
-        />
-      </div>
-    );
-  }
+  return (
+    <>
+      <ToastContainer />
+      <FormTodo
+        addTodo={addTodo}
+        currentName={currentName}
+        handleChange={handleChange}
+        valueInput={valueInput}
+        searchTodo={searchTodo}
+      />
+      <List
+        todoLists={todoLists}
+        deleteTodo={deleteTodo}
+        editTodo={editTodo}
+        newTodo={newTodo}
+      />
+    </>
+  );
 }
-
-export default App;

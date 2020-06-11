@@ -1,22 +1,26 @@
 import React, { Component } from "react";
-class Item extends Component {
-  render() {
-    const { id, name, handleDelete,index, handleEdit } = this.props;
+import {toast} from 'react-toastify'
+export default function Item({id,name,deleteTodo,editTodo}){
+  const notify = () =>
+    toast.error("🦄 Delete Success!", {
+      position: "top-right",
+      autoClose: 3000
+    });
     return (
       <tr>
-        <td>{index + 1}</td>
+        <td>{id}</td>
         <td>{name}</td>
         <td>
-          <button onClick = {() => handleEdit(name)} className="btn btn-success mr-2">
+          <button onClick = {() => editTodo(id)} className="btn btn-success mr-2">
             <i className="fa fa-edit"></i>
           </button>
-          <button onClick = {() => handleDelete(id)} className="btn btn-danger">
+          <button onClick = {() => deleteTodo(id)} className="btn btn-danger">
             <i className="fa fa-close"></i>
           </button>
+
         </td>
       </tr>
     );
-  }
 }
 
-export default Item;
+

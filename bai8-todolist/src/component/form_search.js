@@ -1,22 +1,19 @@
-import React, { Component } from "react";
-class FromSearch extends Component {
-  constructor(){
-      super()
-      this.inputRef = React.createRef();
-  }
-  render() {
-      const {handleSearch} = this.props
-    return (
-      <form class="form-inline search">
-        <div class="form-group mx-sm-3 mb-2">
-          <input ref = {this.inputRef} type="text" class="form-control" id="search" />
-        </div>
-        <button onClick = {() => handleSearch(this.inputRef)} type="button" class="btn btn-primary mb-2">
-          <i className="fa fa-search" aria-hidden="true"></i>
-        </button>
-      </form>
-    );
-  }
+import React from "react";
+import { useRef } from "react";
+export default function FormSearch({ searchTodo }) {
+  const nameSearch = useRef();
+  return (
+    <form class="form-inline">
+      <div class="form-group mx-sm-3 mb-2">
+        <input ref={nameSearch} type="text" class="form-control" />
+      </div>
+      <button
+        onClick={() => searchTodo(nameSearch.current.value)}
+        type="button"
+        class="btn btn-primary mb-2"
+      >
+        Search
+      </button>
+    </form>
+  );
 }
-
-export default FromSearch;

@@ -3,6 +3,8 @@ import FormTodo from "./component/form_todo";
 import List from "./component/list";
 import "../src/style.css";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -12,33 +14,42 @@ class App extends React.Component {
       currentName: "",
       todoSearch: "",
       idUpdate: "",
-      loader: true
+      loader: true,
     };
   }
-  componentDidUpdate(){
-    if(this.state.loader ){
-      this.setState({
-        loader: true
-      }, () => {
-        console.log(this.state.loader)
-      })
-    }
-  }
+  // componentDidUpdate(){
+  //   console.log('ComponentDidupdate')
+  //   console.log(this.state.loader)
+  //   if(this.state.loader ===true){
+  //     this.setState({
+  //       loader: false
+  //     })
+  //   }
+  // }
+  notifySuccess = () =>
+      toast.success("🦄Add Todo Success!", {
+      position: "top-right",
+      autoClose: 3000,
+    });
+    notifyDelete = () =>
+    toast.error("🦄 Delete Todo Success!", {
+    position: "top-right",
+    autoClose: 3000,
+  });
   componentDidMount() {
     axios
       .get("https://5ec912d99ccbaf0016aa8b6f.mockapi.io/todoLists")
       .then((res) => {
         this.setState({
+          todoLists: res.data,
           loader: false,
-          todoLists: res.data
         });
       });
   }
-  
+
   handleAdd = (inputText, id) => {
-    console.log('hello')
+    console.log("hello");
     const { todoLists, currentName } = this.state;
-    console.log(id);
     if (currentName.trim() !== "") {
       axios
         .put(`https://5ec912d99ccbaf0016aa8b6f.mockapi.io/todoLists/${id}`, {
@@ -46,7 +57,6 @@ class App extends React.Component {
         })
         .then(() => {
           this.setState({
-            loader : false,
             todoLists: todoLists.map((todo) => {
               if (todo.name === currentName) {
                 return { ...todo, name: inputText.current.value };
@@ -54,7 +64,7 @@ class App extends React.Component {
             }),
             idUpdate: "",
           });
-        });
+        }, this.notifySuccess());
     } else {
       const newTodo = {
         id: todoLists.length + 1,
@@ -64,12 +74,12 @@ class App extends React.Component {
         .post("https://5ec912d99ccbaf0016aa8b6f.mockapi.io/todoLists", newTodo)
         .then((res) => {
           this.setState({
-            loader : false,
+            loader: true,
             todoLists: [...todoLists, res.data],
             currentName: "",
             idUpdate: "",
           });
-        });
+        }, this.notifySuccess());
     }
   };
   handleDelete = (id) => {
@@ -81,7 +91,7 @@ class App extends React.Component {
         this.setState({
           todoLists: todoLists.filter((todo) => todo.id !== id),
         });
-      });
+      }, this.notifyDelete());
   };
   handleEdit = (inputText, id) => {
     this.setState({
@@ -90,6 +100,8 @@ class App extends React.Component {
       idUpdate: id,
     });
   };
+  //  this method excute event onChange from other func , it also make componentDidUpdate run when I input text
+  // but you only care affection of it on method componentDidupdate
   handleChange = (e) => {
     this.setState({
       inputValue: e.target.value,
@@ -108,7 +120,7 @@ class App extends React.Component {
         });
       });
   };
- 
+
   render() {
     const { todoLists, inputValue, todoSearch, idUpdate } = this.state;
     return (
@@ -126,7 +138,8 @@ class App extends React.Component {
           handleDelete={this.handleDelete}
           handleEdit={this.handleEdit}
         />
-        {this.state.loader  && <div class="loader"></div>}
+        <ToastContainer />
+        {this.state.loader && <div class="loader"></div>}
       </div>
     );
   }
